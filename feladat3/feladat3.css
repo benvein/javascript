@@ -1,0 +1,92 @@
+.container{
+    display: flex;
+    width: 90%;
+    height: 700px;
+    margin: auto;
+}
+
+.kek{
+    background-color: cyan;
+    width: 70px;
+    list-style-type: none;
+    height: 30px;
+    margin-left: 10px;
+}
+
+#lila{
+    background-color: purple;
+    height: 50px;
+    width:90%;
+    margin:auto;
+    align-items: center;
+    flex-direction: row;
+    display:flex;
+}
+
+#zold{
+    background-color: green;
+    flex-grow: 2;
+    order: 2;
+}
+
+#sarga{
+    background-color: yellow;
+    flex-grow: 3;
+    order:1;
+}
+
+/*feladat2*/
+
+.kek2{
+    background-color: cyan;
+    width: 70px;
+    list-style-type: none;
+    height: 30px;
+    margin-left: 10px;
+}
+
+.kek2:first-child{
+    margin-left: 90px;
+}
+
+#lila2{
+    background-color: purple;
+    height: 50px;
+    width:100%;
+    margin:auto;
+    align-items: center;
+    flex-direction: row;
+    display:flex;
+    margin-bottom: 20px;
+}
+
+#szurke{
+    background-color: grey;
+    height: 50px;
+    width: 90%;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.container2{
+    width: 90%;
+    height: 700px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+#sarga2{
+    background-color: yellow;
+    flex-grow: 3;
+    order:2;
+}
+
+#zold2{
+    background-color: green;
+    flex-grow: 2;
+    margin-right: 10px;
+    order:1;
+}
+
+/*feladat3*/

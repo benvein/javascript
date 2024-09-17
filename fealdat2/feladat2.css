@@ -7,40 +7,6 @@
     align-items: center;
 }
 
-.container2{
-    width: 100%;
-    height: 400px;
-    display: flex;
-    background-color: yellow;
-    flex-direction: row;
-    align-items: center;
-}
-
-.container3{
-    width: 100%;
-    height: 400px;
-    display: flex;
-    background-color: yellow;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.container4{
-    width: 100%;
-    height: 400px;
-    display: flex;
-    background-color: yellow;
-    flex-direction: row;
-    align-items: end;
-    justify-content: end;
-}
-
-div{
-    height: 100px;
-    width: 100px;
-}
-
 #zold{
     background-color: green;
     order:1;
@@ -55,6 +21,33 @@ div{
     order:2;
 }
 
+/*feladat2*/
+
+.container2{
+    width: 100%;
+    height: 400px;
+    display: flex;
+    background-color: yellow;
+    flex-direction: row;
+    align-items: center;
+}
+
+.li1{
+    margin-right: 2px;
+}
+
+/*fel3*/
+
+.container3{
+    width: 100%;
+    height: 400px;
+    display: flex;
+    background-color: yellow;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
 li{
     background-color: purple;
     height:100px;
@@ -62,10 +55,29 @@ li{
     list-style-type: none;
 }
 
-.li1{
-    margin-right: 2px;
+/*fel4*/
+
+.container4{
+    width: 100%;
+    height: 400px;
+    display: flex;
+    background-color: yellow;
+    flex-direction: row;
+    align-items: end;
+    justify-content: end;
 }
 
 .li2{
     margin-left: 2px;
 }
+
+div{
+    height: 100px;
+    width: 100px;
+}
+
+
+
+
+
+
