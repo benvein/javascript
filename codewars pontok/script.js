@@ -1,31 +1,50 @@
 document.getElementById('userForm').addEventListener('submit', function(event) {
     event.preventDefault();
-    const userId = document.getElementById('userId').value; // ID mező
-    fetchUserData(userId); // Hívás módosítása
+    const userId = document.getElementById('userId').value; 
+    fetchUserData(userId); 
 });
 
-function fetchUserData(userId) { // Függvény neve
-    const url = `https://api.allorigins.win/get?url=https://codewars.com/api/v1/users/${userId}`; // Alternatív CORS proxy használata
+function fetchUserData(userId) { 
+    const url = `https://api.allorigins.win/get?url=https://codewars.com/api/v1/users/${userId}`;
     fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            const userData = JSON.parse(data.contents); // JSON parse a proxy válaszából
-            displayUserData(userData); // Hívás módosítása
-        })
-        .catch(error => console.error('Fetch error:', error)); // Hiba kezelése
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(user => {
+    console.log(user);
+    displayUserData(user);
+  })
+  .catch(error => {
+    console.error('There was a problem with the fetch operation:', error);
+  });
 }
 
-function displayUserData(data) { // Függvény neve
+function displayUserData(data){
     const userDataContainer = document.getElementById('userData');
     const card = document.createElement('div');
     card.className = 'card';
+
+    if (!data) {
+        card.innerHTML = `<p>No user data found.</p>`;
+        userDataContainer.appendChild(card);
+        return;
+    }
+
+    const languages = data.languages && Array.isArray(data.languages) ? data.languages.join(', ') : 'N/A';
+
+    const javascriptRank = data.ranks?.languages?.javascript?.name || 'N/A';
+    const overallRank = data.ranks?.overall?.name || 'N/A';
+
     card.innerHTML = `
-        <h2>${data.username}</h2>
-        <p><strong>Név:</strong> ${data.name}</p>
-        <p><strong>Klan:</strong> ${data.clan}</p>
-        <p><strong>Nyelvek:</strong> ${data.languages.join(', ')}</p>
-        <p><strong>JavaScript:</strong> ${data.ranks.languages.javascript.name}</p>
-        <p><strong>Rang:</strong> ${data.ranks.overall.name}</p>
+        <h2>${data.username || 'N/A'}</h2>
+        <p><strong>Név:</strong> ${data.name || 'N/A'}</p>
+        <p><strong>Klan:</strong> ${data.clan || 'N/A'}</p>
+        <p><strong>Nyelvek:</strong> ${languages}</p>
+        <p><strong>JavaScript:</strong> ${javascriptRank}</p>
+        <p><strong>Rang:</strong> ${overallRank}</p>
     `;
     userDataContainer.appendChild(card);
 }
