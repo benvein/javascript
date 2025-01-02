@@ -1,4 +1,4 @@
-import input from  './input.js'
+import input from  '../input.js'
 
 function averageOfDigits(num){
     let digits = num.toString();
