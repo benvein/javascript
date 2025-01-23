@@ -1,11 +1,11 @@
 document.getElementById('userForm').addEventListener('submit', function(event) {
     event.preventDefault();
-    const userId = document.getElementById('userId').value; 
-    fetchUserData(userId); 
+    const username = document.getElementById('userId').value; 
+    fetchUserData(username); 
 });
 
-function fetchUserData(userId) { 
-    const url = `https://api.allorigins.win/get?url=https://codewars.com/api/v1/users/${userId}`;
+function fetchUserData(username) { 
+    const url = `https://www.codewars.com/api/v1/users/${username}`;
     fetch(url)
   .then(response => {
     if (!response.ok) {
