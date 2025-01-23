@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kurzusok és Diákok Kezelése</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body>
+    <header>Course and Student Management</header>
+
+    <div class="menu">
+        <button onclick="showSection('courses')">Courses</button>
+        <button onclick="showSection('students')">Students</button>
+    </div>
+
+    <section id="courses" class="hidden">
+        <h2>Courses</h2>
+        <button class="action" onclick="addCourse()">Add Course</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="course-list">
+                <!-- Course rows will be dynamically added here -->
+            </tbody>
+        </table>
+    </section>
+
+    <section id="students" class="hidden">
+        <h2>Students</h2>
+        <button class="action" onclick="addStudent()">Add Student</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="student-list">
+                <!-- Student rows will be dynamically added here -->
+            </tbody>
+        </table>
+    </section>
+    <script src="script.js"></script>
+</body>
+</html>
