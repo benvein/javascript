@@ -4,7 +4,7 @@ import __dirname from "./utils/rootpath.js";
 const app = express();
 
 
-app.get("./index", (req,res)=>{
+app.get("/", (req,res)=>{
     res.sendFile("./views/index.html", {root:__dirname});
 })
 
