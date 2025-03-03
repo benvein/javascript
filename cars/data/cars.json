@@ -1,0 +1,28 @@
+[
+    {
+        "brand": "Ford",
+        "model": "F-150",
+        "year": 2023
+    },
+    {
+        "brand": "Volkswagen",
+        "model": "Golf",
+        "year": 2022
+    },
+    {
+        "brand": "Audi",
+        "model": "A4",
+        "year": 2003
+    },
+    {
+        "brand": "Wartburg",
+        "model": "353",
+        "year": 1982
+    },
+    {
+        "brand": "Lada",
+        "model": "Niva",
+        "year": 2023
+    }
+
+]
