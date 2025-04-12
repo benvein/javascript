@@ -32,7 +32,7 @@ export function dbRun(sql, params=[]){
 export async function initializeDatabase(){
     await dbRun("DROP TABLE IF EXISTS timetable;");
     await dbRun(
-        "CREATE TABLE IF NOT EXISTS timetable(id INTEGER PRIMARY KEY AUTOINCREMENT, day STRING NOT NULL, subject STRING NOT NULL, period INTEGER NOT NULL);"
+        "CREATE TABLE IF NOT EXISTS timetable(id INTEGER PRIMARY KEY AUTOINCREMENT, day STRING NOT NULL, subject STRING NOT NULL, period INTEGER NOT NULL, UNIQUE(day, period));"
     )
     const timetable = [
         {day: "Monday", subject: "Maths", period: 1},
@@ -43,7 +43,7 @@ export async function initializeDatabase(){
 
     for(const i of timetable){
         await dbRun(
-            "INSERT INTO timetable(day, subject, period) values (?, ?);",[
+            "INSERT INTO timetable(day, subject, period) values (?, ?, ?);",[
                 i.day,
                 i.subject,
                 i.period
