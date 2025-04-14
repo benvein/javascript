@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // DOM Elements
     const timetableBody = document.querySelector('#timetable tbody');
     const addBtn = document.getElementById('addBtn');
     const modal = document.getElementById('entryModal');
@@ -8,11 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const modalTitle = document.getElementById('modalTitle');
     const entryIdInput = document.getElementById('entryId');
 
-    // Initialize timetable with empty periods
     const periods = 12;
-    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
     
-    // Create empty timetable structure
     function createEmptyTimetable() {
         timetableBody.innerHTML = '';
         for (let period = 1; period <= periods; period++) {
@@ -32,20 +29,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Fetch timetable data from backend
     async function fetchTimetable() {
         try {
             const response = await fetch('http://localhost:3000/timetable');
-            if (!response.ok) throw new Error('Failed to fetch timetable');
+            if (!response.ok) throw new Error('failed to fetch');
             const data = await response.json();
             populateTimetable(data);
         } catch (error) {
-            console.error('Error:', error);
-            alert('Failed to load timetable data');
+            console.error('error:', error);
+            alert('failed to load');
         }
     }
 
-    // Populate timetable with data
     function populateTimetable(entries) {
         createEmptyTimetable();
         
@@ -55,14 +50,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 cell.innerHTML = `
                     ${entry.subject}
                     <div class="actions">
-                        <button class="edit-btn" data-id="${entry.id}">Edit</button>
-                        <button class="delete-btn" data-id="${entry.id}">Delete</button>
+                        <button class="edit-btn" data-id="${entry.id}">edit</button>
+                        <button class="delete-btn" data-id="${entry.id}">delete</button>
                     </div>
                 `;
             }
         });
 
-        // Add event listeners to action buttons
         document.querySelectorAll('.edit-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -78,21 +72,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Open modal for adding new entry
     addBtn.addEventListener('click', () => {
         entryIdInput.value = '';
         entryForm.reset();
-        modalTitle.textContent = 'Add New Timetable Entry';
+        modalTitle.textContent = 'add new record';
         modal.style.display = 'block';
     });
 
-    // Close modal
     closeBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         modal.style.display = 'none';
     });
 
-    // Handle form submission
     entryForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
@@ -107,7 +98,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const id = entryIdInput.value;
             
             if (id) {
-                // Update existing entry
                 response = await fetch(`http://localhost:3000/timetable/${id}`, {
                     method: 'PUT',
                     headers: {
@@ -116,7 +106,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     body: JSON.stringify(formData)
                 });
             } else {
-                // Create new entry
                 response = await fetch('http://localhost:3000/timetable', {
                     method: 'POST',
                     headers: {
@@ -126,22 +115,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
 
-            if (!response.ok) throw new Error('Failed to save entry');
+            if (!response.ok) throw new Error('failed to save');
             
             modal.style.display = 'none';
             fetchTimetable();
         } catch (error) {
             console.error('Error:', error);
-            alert('Failed to save timetable entry');
+            alert('failed to save');
         }
     });
 
-    // Edit entry
     async function editEntry(id) {
         try {
             const response = await fetch(`http://localhost:3000/timetable/${id}`);
             if (!response.ok) {
-                throw new Error('Failed to fetch timetable entry');
+                throw new Error('failed to fetch');
             }
             const entry = await response.json();
     
@@ -151,39 +139,36 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('period').value = entry.period;
             document.getElementById('subject').value = entry.subject;
     
-            modalTitle.textContent = 'Edit Timetable Entry';
+            modalTitle.textContent = 'edit record';
             modal.style.display = 'block';
         } catch (error) {
             console.error('Error:', error);
-            alert('Failed to load entry for editing');
+            alert('failed to load for editing');
         }
     }
 
-    // Delete entry
     async function deleteEntry(id) {
-        if (!confirm('Are you sure you want to delete this entry?')) return;
+        if (!confirm('are you sure?')) return;
         
         try {
             const response = await fetch(`http://localhost:3000/timetable/${id}`, {
                 method: 'DELETE'
             });
             
-            if (!response.ok) throw new Error('Failed to delete entry');
+            if (!response.ok) throw new Error('failed to delete');
             fetchTimetable();
         } catch (error) {
             console.error('Error:', error);
-            alert('Failed to delete timetable entry');
+            alert('failed to delete');
         }
     }
 
-    // Close modal when clicking outside
     window.addEventListener('click', (e) => {
         if (e.target === modal) {
             modal.style.display = 'none';
         }
     });
 
-    // Initialize the app
     createEmptyTimetable();
     fetchTimetable();
 });
