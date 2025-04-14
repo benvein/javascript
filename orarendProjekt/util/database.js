@@ -29,25 +29,33 @@ export function dbRun(sql, params=[]){
     });
 }
 
-export async function initializeDatabase(){
-    await dbRun("DROP TABLE IF EXISTS timetable;");
+export async function initializeDatabase() {
+    // Create the table only if it doesn't already exist
     await dbRun(
-        "CREATE TABLE IF NOT EXISTS timetable(id INTEGER PRIMARY KEY AUTOINCREMENT, day STRING NOT NULL, subject STRING NOT NULL, period INTEGER NOT NULL, UNIQUE(day, period));"
-    )
-    const timetable = [
-        {day: "Monday", subject: "Maths", period: 1},
-        {day: "Tuesday", subject: "English", period: 3},
-        {day: "Wednesday", subject: "PE", period: 6},
-        {day: "Friday", subject: "Physics", period: 2}
-    ];
+        `CREATE TABLE IF NOT EXISTS timetable (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            day STRING NOT NULL,
+            subject STRING NOT NULL,
+            period INTEGER NOT NULL,
+            UNIQUE(day, period)
+        );`
+    );
 
-    for(const i of timetable){
-        await dbRun(
-            "INSERT INTO timetable(day, subject, period) values (?, ?, ?);",[
-                i.day,
-                i.subject,
-                i.period
-            ]
-        );
+    // Optional: Insert default records only if the table is empty
+    const existingRecords = await dbAll("SELECT COUNT(*) as count FROM timetable;");
+    if (existingRecords[0].count === 0) {
+        const timetable = [
+            { day: "Monday", subject: "Maths", period: 1 },
+            { day: "Tuesday", subject: "English", period: 3 },
+            { day: "Wednesday", subject: "PE", period: 6 },
+            { day: "Friday", subject: "Physics", period: 2 }
+        ];
+
+        for (const entry of timetable) {
+            await dbRun(
+                "INSERT OR IGNORE INTO timetable(day, subject, period) VALUES (?, ?, ?);",
+                [entry.day, entry.subject, entry.period]
+            );
+        }
     }
 }
