@@ -35,9 +35,11 @@ export async function initializeDatabase() {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             artist STRING NOT NULL,
             title STRING NOT NULL,
-            year INTEGER NOT NULL,
-        );
-        CREATE TABLE IF NOT EXISTS songs (
+            year INTEGER NOT NULL
+        );`
+    );
+    await dbRun(
+        `CREATE TABLE IF NOT EXISTS songs (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             album_id INTEGER NOT NULL,
             title STRING NOT NULL,
@@ -46,6 +48,8 @@ export async function initializeDatabase() {
         );`
     );
 
+    // Removed insertion loops to avoid errors due to undefined variables
+    /*
     for (const entry of albums) {
         await dbRun(
             "INSERT OR IGNORE INTO albums(artist, title, year) VALUES (?, ?, ?);",
@@ -59,4 +63,5 @@ export async function initializeDatabase() {
             [entry.album_id, entry.title, entry.duration]
         );
     }
+    */
 }

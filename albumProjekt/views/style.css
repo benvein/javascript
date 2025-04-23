@@ -1,0 +1,122 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+h1, h2, h3 {
+    color: #2c3e50;
+}
+
+#album-section, #album-form-section, #songs-section, #add-multiple-songs-section {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+#album-list, #songs-list {
+    list-style: none;
+    padding: 0;
+}
+
+#album-list li, #songs-list li {
+    padding: 10px;
+    margin-bottom: 8px;
+    background-color: #ecf0f1;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#album-list li:hover, #songs-list li:hover {
+    background-color: #d0d7de;
+}
+
+#album-list li button, #songs-list li button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
+}
+
+#album-list li button:hover, #songs-list li button:hover {
+    background-color: #2980b9;
+}
+
+button#add-album-btn, button#add-song-row-btn, button#submit-album-btn, button#cancel-album-btn, button#cancel-multiple-songs-btn, button#close-songs-btn {
+    padding: 10px 15px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 6px;
+    background-color: #27ae60;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+button#add-album-btn:hover, button#add-song-row-btn:hover, button#submit-album-btn:hover, button#cancel-album-btn:hover, button#cancel-multiple-songs-btn:hover, button#close-songs-btn:hover {
+    background-color: #1e8449;
+}
+
+form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+form input[type="text"], form input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.song-input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.song-input-row label {
+    margin: 0;
+    font-weight: normal;
+}
+
+.song-input-row input {
+    flex: 1;
+}
+
+.song-input-row button.remove-song-btn {
+    background-color: #e74c3c;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
+}
+
+.song-input-row button.remove-song-btn:hover {
+    background-color: #c0392b;
+}
+
+.hidden {
+    display: none;
+}

@@ -1,13 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css" type="text/css">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Album Collection</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 <body>
-    
+    <h1>Album Collection</h1>
+
+    <section id="album-section">
+        <h2>Albums</h2>
+        <button id="add-album-btn">Add New Album</button>
+        <ul id="album-list"></ul>
+    </section>
+
+    <section id="album-form-section" class="hidden">
+        <h2 id="form-title">Add Album</h2>
+        <form id="album-form">
+            <input type="hidden" id="album-id" />
+            <label for="artist">Artist:</label>
+            <input type="text" id="artist" name="artist" required />
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required />
+            <label for="year">Year:</label>
+            <input type="number" id="year" name="year" required />
+            <button type="submit" id="submit-album-btn">Save</button>
+            <button type="button" id="cancel-album-btn">Cancel</button>
+        </form>
+    </section>
+
+    <section id="songs-section" class="hidden">
+        <h2>Songs</h2>
+        <ul id="songs-list"></ul>
+        <form id="song-form">
+            <h3>Add Song</h3>
+            <label for="song-title">Title:</label>
+            <input type="text" id="song-title" name="song-title" required />
+            <label for="song-duration">Duration (seconds):</label>
+            <input type="number" id="song-duration" name="song-duration" required />
+            <button type="submit">Add Song</button>
+        </form>
+        <button id="close-songs-btn">Close Songs</button>
+    </section>
+
+    <section id="add-multiple-songs-section" class="hidden">
+        <h2>Add Multiple Songs</h2>
+        <form id="multiple-songs-form">
+            <div id="multiple-songs-container">
+                <div class="song-input-row">
+                    <label>Title:</label>
+                    <input type="text" name="title" required />
+                    <label>Duration (seconds):</label>
+                    <input type="number" name="duration" required />
+                    <button type="button" class="remove-song-btn">Remove</button>
+                </div>
+            </div>
+            <button type="button" id="add-song-row-btn">Add Another Song</button>
+            <button type="submit">Submit Songs</button>
+            <button type="button" id="cancel-multiple-songs-btn">Cancel</button>
+        </form>
+    </section>
+
     <script src="script.js"></script>
 </body>
 </html>
