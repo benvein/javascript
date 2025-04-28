@@ -48,20 +48,4 @@ export async function initializeDatabase() {
         );`
     );
 
-    // Removed insertion loops to avoid errors due to undefined variables
-    /*
-    for (const entry of albums) {
-        await dbRun(
-            "INSERT OR IGNORE INTO albums(artist, title, year) VALUES (?, ?, ?);",
-            [entry.artist, entry.title, entry.year]
-        );
-    }
-
-    for (const entry of songs) {
-        await dbRun(
-            "INSERT OR IGNORE INTO songs(album_id, title, duration) VALUES (?, ?, ?);",
-            [entry.album_id, entry.title, entry.duration]
-        );
-    }
-    */
 }

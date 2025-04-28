@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const songsList = document.getElementById("songs-list");
     const closeSongsBtn = document.getElementById("close-songs-btn");
 
-    // Add multiple songs form handlers
     const addMultipleSongsSection = document.getElementById("add-multiple-songs-section");
     const multipleSongsForm = document.getElementById("multiple-songs-form");
     const multipleSongsContainer = document.getElementById("multiple-songs-container");
@@ -22,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentAlbumForMultipleSongs = null;
 
-    // Fetch and display albums
     async function fetchAlbums() {
         try {
             const res = await fetch("/albums");
@@ -33,12 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 li.textContent = `${album.artist} - ${album.title} (${album.year})`;
                 li.dataset.id = album.id;
 
-                // Click to show songs
                 li.addEventListener("click", () => {
                     showSongs(album.id);
                 });
 
-                // Add update and delete buttons
                 const updateBtn = document.createElement("button");
                 updateBtn.textContent = "Edit";
                 updateBtn.addEventListener("click", (e) => {
@@ -55,7 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 });
 
-                // Add "Add Songs" button
                 const addSongsBtn = document.createElement("button");
                 addSongsBtn.textContent = "Add Songs";
                 addSongsBtn.addEventListener("click", (e) => {
@@ -77,11 +72,9 @@ document.addEventListener("DOMContentLoaded", () => {
     function openAddMultipleSongsForm(albumId) {
         currentAlbumForMultipleSongs = albumId;
         addMultipleSongsSection.classList.remove("hidden");
-        // Clear existing rows except one
         while (multipleSongsContainer.children.length > 1) {
             multipleSongsContainer.removeChild(multipleSongsContainer.lastChild);
         }
-        // Clear inputs in the remaining row
         const firstRow = multipleSongsContainer.children[0];
         firstRow.querySelector('input[name="title"]').value = "";
         firstRow.querySelector('input[name="duration"]').value = "";
@@ -144,7 +137,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Show songs for an album
     let currentAlbumId = null;
     async function showSongs(albumId) {
         currentAlbumId = albumId;
@@ -162,7 +154,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     const li = document.createElement("li");
                     li.textContent = `${song.title} (${song.duration} sec)`;
                 
-                    // Add delete button for each song
                     const deleteBtn = document.createElement("button");
                     deleteBtn.textContent = "Delete";
                     deleteBtn.addEventListener("click", async (e) => {
@@ -189,13 +180,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Close songs section
     closeSongsBtn.addEventListener("click", () => {
         songsSection.classList.add("hidden");
         songsList.innerHTML = "";
     });
 
-    // Handle song form submission (single song add)
     const songForm = document.getElementById("song-form");
     const songTitleInput = document.getElementById("song-title");
     const songDurationInput = document.getElementById("song-duration");
@@ -225,7 +214,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Open form for adding new album
     addAlbumBtn.addEventListener("click", () => {
         formTitle.textContent = "Add Album";
         albumIdInput.value = "";
@@ -235,7 +223,6 @@ document.addEventListener("DOMContentLoaded", () => {
         albumFormSection.classList.remove("hidden");
     });
 
-    // Open form for editing album
     function openEditForm(album) {
         formTitle.textContent = "Edit Album";
         albumIdInput.value = album.id;
@@ -245,12 +232,10 @@ document.addEventListener("DOMContentLoaded", () => {
         albumFormSection.classList.remove("hidden");
     }
 
-    // Cancel form
     cancelAlbumBtn.addEventListener("click", () => {
         albumFormSection.classList.add("hidden");
     });
 
-    // Submit form for add or update
     albumForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         const id = albumIdInput.value;
@@ -265,7 +250,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             if (id) {
-                // Update album
                 const res = await fetch(`/albums/${id}`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
@@ -273,7 +257,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
                 if (!res.ok) throw new Error("Failed to update album");
             } else {
-                // Add album
                 const res = await fetch("/albums", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -288,7 +271,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Delete album
     async function deleteAlbum(id) {
         try {
             const res = await fetch(`/albums/${id}`, { method: "DELETE" });
@@ -299,6 +281,5 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Initial load
     fetchAlbums();
 });
