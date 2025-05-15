@@ -2,35 +2,40 @@ import sqlite from 'sqlite3';
 
 const db = new sqlite.Database('./data/timetableDb.sqlite');
 
-export function dbAll(sql, params = []){
+export function dbAll(sql, params = []) {
     return new Promise((resolve, reject) => {
         db.all(sql, params, (err, rows) => {
-            if (err) reject(err);
-            else resolve(rows);
+            if (err) {
+                console.error("Database error in dbAll:", err);
+                reject(err);
+            } else resolve(rows);
         });
     });
 }
 
-export function dbGet(sql, params = []){
+export function dbGet(sql, params = []) {
     return new Promise((resolve, reject) => {
         db.get(sql, params, (err, rows) => {
-            if (err) reject(err);
-            else resolve(rows);
+            if (err) {
+                console.error("Database error in dbGet:", err);
+                reject(err);
+            } else resolve(rows);
         });
     });
 }
 
-export function dbRun(sql, params=[]){
-    return new Promise((resolve, reject)=>{
-        db.run(sql, params, function (err){
-            if(err) reject(err);
-            else resolve(this);
+export function dbRun(sql, params = []) {
+    return new Promise((resolve, reject) => {
+        db.run(sql, params, function (err) {
+            if (err) {
+                console.error("Database error in dbRun:", err);
+                reject(err);
+            } else resolve(this);
         });
     });
 }
 
 export async function initializeDatabase() {
-    // Create the table only if it doesn't already exist
     await dbRun(
         `CREATE TABLE IF NOT EXISTS timetable (
             id INTEGER PRIMARY KEY AUTOINCREMENT,

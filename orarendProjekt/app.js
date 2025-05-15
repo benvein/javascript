@@ -16,8 +16,13 @@ app.get("/", (req, res) => {
 });
 
 app.get("/timetable", async (req, res) => {
-    const timetable = await dbAll("SELECT * FROM timetable;");
-    res.status(200).json(timetable);
+    try {
+        const timetable = await dbAll("SELECT * FROM timetable;");
+        res.status(200).json(timetable);
+    } catch (error) {
+        console.error("Error fetching timetable:", error);
+        res.status(500).json({ error: "Failed to fetch timetable" });
+    }
 });
 
 app.get("/timetable/:id", async (req, res) => {
@@ -28,41 +33,57 @@ app.get("/timetable/:id", async (req, res) => {
         }
         res.status(200).json(record);
     } catch (error) {
+        console.error("Error fetching timetable entry:", error);
         res.status(500).json({ error: "Failed to fetch timetable entry" });
     }
 });
 
 app.post("/timetable", async (req,res) => {
-    const {day, subject, period} = req.body;
-    if(!day || !subject || !period){
-        return res.status(404).sendFile("./views/404.html", {root : __dirname});
+    try {
+        const {day, subject, period} = req.body;
+        if(!day || !subject || !period){
+            return res.status(400).json({ error: "missing data" });
+        }
+        const result = await dbRun(`INSERT INTO timetable (day, subject, period) VALUES (?, ?, ?);`, [day, subject, period]);
+        res.status(201).json({id: result.lastID, day, subject, period});
+    } catch (error) {
+        console.error("Error inserting timetable entry:", error);
+        res.status(500).json({ error: "Failed to insert timetable entry" });
     }
-    const result = await dbRun(`INSERT INTO timetable (day, subject, period) VALUES (?, ?, ?);`, [day, subject, period]);
-    res.status(201).json({id: result.lastID, day, subject, period});
 });
 
 app.put("/timetable/:id", async (req,res) => {
-    const id = req.params.id;
-    const record = await dbGet("SELECT * FROM timetable WHERE id = ?;", [id]);
-    if(!record){
-        return res.status(404).sendFile("./views/404.html", {root : __dirname});
+    try {
+        const id = req.params.id;
+        const record = await dbGet("SELECT * FROM timetable WHERE id = ?;", [id]);
+        if(!record){
+            return res.status(404).json({ error: "Timetable entry not found" });
+        }
+        const {day, subject, period} = req.body;
+        if(!day || !subject || !period){
+            return res.status(400).json({ error: "missing data" });
+        }
+        await dbRun("UPDATE timetable SET day = ?, subject = ?, period = ? WHERE id = ?;", [day, subject, period, id]);
+        res.status(200).json({id, day, subject, period});
+    } catch (error) {
+        console.error("Error updating timetable entry:", error);
+        res.status(500).json({ error: "Failed to update timetable entry" });
     }
-    const {day, subject, period} = req.body;
-    if(!day || !subject || !period){
-        return res.status(404).sendFile("./views/404.html", {root : __dirname});
-    }
-    dbRun("UPDATE timetable SET day = ?, subject = ?, period = ? WHERE id = ?;", [day, subject, period, id]);
-    res.status(200).json({id, day, subject, period});
 });
 
 app.delete("/timetable/:id", async (req,res) => {
-    const id = req.params.id;
-    const record = await dbGet("SELECT * FROM timetable WHERE id = ?;", [id]);
-    if(!record){
-        return res.status(404).sendFile("./views/404.html", {root : __dirname});
+    try {
+        const id = req.params.id;
+        const record = await dbGet("SELECT * FROM timetable WHERE id = ?;", [id]);
+        if(!record){
+            return res.status(404).json({ error: "Timetable entry not found" });
+        }
+        await dbRun("DELETE FROM timetable WHERE id = ?;", [id]);
+        res.status(200).json({message: "deleted"});
+    } catch (error) {
+        console.error("Error deleting timetable entry:", error);
+        res.status(500).json({ error: "Failed to delete timetable entry" });
     }
-    dbRun("DELETE FROM timetable WHERE id = ?;", [id]);
-    res.status(200).json({message: "deleted"});
 });
 
 app.use((err, req, res, next) => {

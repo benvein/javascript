@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const entryIdInput = document.getElementById('entryId');
 
     const periods = 12;
-    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
     
     function createEmptyTimetable() {
         timetableBody.innerHTML = '';
@@ -34,19 +34,24 @@ document.addEventListener('DOMContentLoaded', function() {
             const response = await fetch('http://localhost:3000/timetable');
             if (!response.ok) throw new Error('failed to fetch');
             const data = await response.json();
-            populateTimetable(data);
+            console.log('Fetched timetable data:', data);
+            await populateTimetable(data);
         } catch (error) {
-            console.error('error:', error);
+            console.error('Error:', error);
             alert('failed to load');
         }
     }
 
-    function populateTimetable(entries) {
+    async function populateTimetable(entries) {
         createEmptyTimetable();
-        
+        console.log('Populating timetable with data:', entries);
+    
         entries.forEach(entry => {
-            const cell = document.querySelector(`td[data-day="${entry.day}"][data-period="${entry.period}"]`);
+            const selector = `td[data-day="${entry.day}"][data-period="${entry.period}"]`;
+            console.log('Selector:', selector);
+            const cell = document.querySelector(selector);
             if (cell) {
+                console.log(`Found cell for day: ${entry.day}, period: ${entry.period}`);
                 cell.innerHTML = `
                     ${entry.subject}
                     <div class="actions">
@@ -54,9 +59,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         <button class="delete-btn" data-id="${entry.id}">delete</button>
                     </div>
                 `;
+            } else {
+                console.warn(`No cell found for selector: ${selector}`);
             }
         });
-
+    
         document.querySelectorAll('.edit-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -71,6 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+    
 
     addBtn.addEventListener('click', () => {
         entryIdInput.value = '';
@@ -89,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const formData = {
             day: document.getElementById('day').value,
-            period: document.getElementById('period').value,
+            period: parseInt(document.getElementById('period').value, 10),
             subject: document.getElementById('subject').value
         };
 
@@ -118,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!response.ok) throw new Error('failed to save');
             
             modal.style.display = 'none';
-            fetchTimetable();
+            await fetchTimetable();
         } catch (error) {
             console.error('Error:', error);
             alert('failed to save');
@@ -156,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             if (!response.ok) throw new Error('failed to delete');
-            fetchTimetable();
+            await fetchTimetable();
         } catch (error) {
             console.error('Error:', error);
             alert('failed to delete');
@@ -169,6 +177,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    createEmptyTimetable();
-    fetchTimetable();
+    async function initializeTimetable() {
+        createEmptyTimetable();
+        await fetchTimetable();
+    }
+    
+    initializeTimetable();
 });
