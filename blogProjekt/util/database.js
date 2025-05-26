@@ -2,7 +2,7 @@ import Database from "better-sqlite3";
 
 const db = new Database('./data/database.sqlite');
 
-db.prepare(`CREATE TABLE IS NOT EXISTS blogs
+db.prepare(`CREATE TABLE IF NOT EXISTS blogs
     (id INTEGER PRIMARY KEY AUTOINCREMENT,
     publisher STRING NOT NULL,
     title STRING NOT NULL,
