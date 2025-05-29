@@ -27,7 +27,11 @@
             <h2 id="form-title">Blog hozzáadása</h2>
             <form id="blog-form">
                 <label for="publisher">Kiadó:</label>
-                <input type="text" id="publisher" name="publisher" required />
+                <select id="publisher" name="publisher" required>
+                    <option value="" disabled selected>Válassz kiadót</option>
+                </select>
+                <input type="text" id="new-publisher" placeholder="Új kiadó neve" />
+                <button type="button" id="add-publisher-button">Kiadó hozzáadása</button>
 
                 <label for="title">Cím:</label>
                 <input type="text" id="title" name="title" required />
@@ -36,10 +40,10 @@
                 <input type="text" id="category" name="category" required />
 
                 <label for="content">Tartalom:</label>
-                <textarea id="content" name="content" required></textarea>
+                <textarea id="content" name="content" rows="10" required></textarea>
 
                 <label for="date">Dátum:</label>
-                <input type="date" id="date" name="date" required readonly />
+                <input type="datetime-local" id="date" name="date" required />
 
                 <button type="submit" id="save-blog-button">Mentés</button>
                 <button type="button" id="cancel-button">Mégse</button>

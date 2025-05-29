@@ -18,6 +18,65 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentBlogId = null;
     let isEditing = false;
 
+    let users = [];
+
+    // Populate user select dropdown
+    const publisherSelect = blogForm.publisher;
+    const newPublisherInput = document.getElementById('new-publisher');
+    const addPublisherButton = document.getElementById('add-publisher-button');
+
+    async function fetchPublishers() {
+        try {
+            const response = await fetch('/publishers');
+            if (!response.ok) throw new Error('Failed to fetch publishers');
+            users = await response.json();
+            populateUserSelect();
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+
+    function populateUserSelect() {
+        // Clear existing options except the first placeholder
+        while (publisherSelect.options.length > 1) {
+            publisherSelect.remove(1);
+        }
+        users.forEach(user => {
+            const option = document.createElement('option');
+            option.value = user.id;
+            option.textContent = user.name;
+            publisherSelect.appendChild(option);
+        });
+    }
+
+    addPublisherButton.addEventListener('click', async () => {
+        const newPublisher = newPublisherInput.value.trim();
+        if (newPublisher === '') {
+            alert('Kérjük, adjon meg egy kiadó nevet.');
+            return;
+        }
+        if (users.some(u => u.name === newPublisher)) {
+            alert('Ez a kiadó már létezik.');
+            return;
+        }
+        try {
+            const response = await fetch('/publishers', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: newPublisher }),
+            });
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Hiba történt a kiadó hozzáadása során');
+            }
+            newPublisherInput.value = '';
+            await fetchPublishers();
+            publisherSelect.value = users.find(u => u.name === newPublisher).id;
+        } catch (error) {
+            alert(error.message);
+        }
+    });
+
     function formatDateForInput(dateStr) {
         const date = new Date(dateStr);
         if (isNaN(date)) return '';
@@ -26,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const day = date.getDate().toString().padStart(2, '0');
         return `${year}-${month}-${day}`;
     }
+
 
     function showSection(section) {
         blogListSection.classList.add('hidden');
@@ -65,6 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+
     async function showBlogDetail(id) {
         try {
             const response = await fetch(`/blogs/${id}`);
@@ -72,12 +133,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const blog = await response.json();
             currentBlogId = id;
             blogDetail.innerHTML = `
-                <p><strong>Kiadó:</strong> ${blog.publisher}</p>
+                <p><strong>Kiadó:</strong> ${blog.publisherName}</p>
                 <p><strong>Cím:</strong> ${blog.title}</p>
                 <p><strong>Kategória:</strong> ${blog.category}</p>
                 <p><strong>Tartalom:</strong> ${blog.content}</p>
-                <p><strong>Dátum:</strong> ${new Date(blog.date).toLocaleDateString()}</p>
-                <p><strong>Utolsó frissítés:</strong> ${new Date(blog.dateOfLastUpdate).toLocaleDateString()}</p>
+                <p><strong>Dátum:</strong> ${new Date(blog.date).toLocaleString()}</p>
+                <p><strong>Utolsó frissítés:</strong> ${new Date(blog.dateOfLastUpdate).toLocaleString()}</p>
             `;
             showSection(blogDetailSection);
         } catch (error) {
@@ -85,18 +146,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function showAddBlogForm() {
+    async function showAddBlogForm() {
         isEditing = false;
         currentBlogId = null;
         formTitle.textContent = 'Blog hozzáadása';
         blogForm.reset();
-        // Set date to today's date and disable editing
-        const today = new Date().toISOString().split('T')[0];
-        blogForm.date.value = today;
-        blogForm.date.readOnly = true;
-        blogForm.dateOfLastUpdate.value = today;
+        await fetchPublishers();
+        // Set date to current datetime-local string and make readonly with timezone offset adjustment
+        const now = new Date();
+        const tzoffset = now.getTimezoneOffset() * 60000; // offset in milliseconds
+        const localISOTime = new Date(now - tzoffset).toISOString().slice(0,16);
+        const dateInput = blogForm.querySelector('#date');
+        dateInput.value = localISOTime;
+        dateInput.readOnly = true;
+        // Reset publisher select to placeholder
+        publisherSelect.value = '';
         showSection(blogFormSection);
     }
+
 
     blogForm.date.addEventListener('change', () => {
         if (!isEditing) {
@@ -112,21 +179,28 @@ document.addEventListener('DOMContentLoaded', () => {
             const blog = await response.json();
             isEditing = true;
             formTitle.textContent = 'Blog szerkesztése';
-            blogForm.publisher.value = blog.publisher;
+            populateUserSelect();
+            publisherSelect.value = blog.publisherId;
             blogForm.title.value = blog.title;
             blogForm.category.value = blog.category;
             blogForm.content.value = blog.content;
-            blogForm.date.value = formatDateForInput(blog.date);
+            // Adjust date for timezone offset for datetime-local input
+            const date = new Date(blog.date);
+            const tzoffset = date.getTimezoneOffset() * 60000;
+            const localISOTime = new Date(date - tzoffset).toISOString().slice(0,16);
+            blogForm.date.value = localISOTime;
+            blogForm.date.readOnly = true;
             showSection(blogFormSection);
         } catch (error) {
             alert(error.message);
         }
     }
 
+
     blogForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const blogData = {
-            publisher: blogForm.publisher.value.trim(),
+            publisherId: parseInt(publisherSelect.value),
             title: blogForm.title.value.trim(),
             category: blogForm.category.value.trim(),
             content: blogForm.content.value.trim(),

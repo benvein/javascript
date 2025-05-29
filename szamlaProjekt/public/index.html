@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bill Management</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <h1>Bill Management</h1>
+
+    <form id="bill-form">
+        <input type="hidden" id="bill-id" />
+        <div>
+            <label for="sellerId">Seller:</label>
+            <select id="sellerId" required>
+                <option value="">Select Seller</option>
+            </select>
+        </div>
+        <div>
+            <label for="buyerId">Buyer:</label>
+            <select id="buyerId" required>
+                <option value="">Select Buyer</option>
+            </select>
+        </div>
+        <div>
+            <label for="billNumber">Bill Number:</label>
+            <input type="text" id="billNumber" required />
+        </div>
+        <div>
+            <label for="date">Date:</label>
+            <input type="date" id="date" required />
+        </div>
+        <div>
+            <label for="dateOfCompletion">Date of Completion:</label>
+            <input type="date" id="dateOfCompletion" required />
+        </div>
+        <div>
+            <label for="dueDate">Due Date:</label>
+            <input type="date" id="dueDate" required />
+        </div>
+        <div>
+            <label for="totalAmount">Total Amount:</label>
+            <input type="number" id="totalAmount" required />
+        </div>
+        <div>
+            <label for="tax">Tax:</label>
+            <input type="number" id="tax" required />
+        </div>
+        <button type="submit">Save Bill</button>
+        <button type="button" id="cancel-btn" style="display:none;">Cancel</button>
+    </form>
+
+    <h2>Bills List</h2>
+    <table id="bills-table" border="1" cellspacing="0" cellpadding="5">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Seller</th>
+                <th>Buyer</th>
+                <th>Bill Number</th>
+                <th>Date</th>
+                <th>Date of Completion</th>
+                <th>Due Date</th>
+                <th>Total Amount</th>
+                <th>Tax</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Bills will be populated here -->
+        </tbody>
+    </table>
+
+    <h1>Seller Management</h1>
+    <form id="seller-form">
+        <input type="hidden" id="seller-id" />
+        <div>
+            <label for="seller-name">Name:</label>
+            <input type="text" id="seller-name" required />
+        </div>
+        <div>
+            <label for="seller-taxNumber">Tax Number:</label>
+            <input type="text" id="seller-taxNumber" required />
+        </div>
+        <button type="submit">Save Seller</button>
+        <button type="button" id="seller-cancel-btn" style="display:none;">Cancel</button>
+    </form>
+
+    <h2>Sellers List</h2>
+    <table id="sellers-table" border="1" cellspacing="0" cellpadding="5">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Tax Number</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Sellers will be populated here -->
+        </tbody>
+    </table>
+
+    <h1>Buyer Management</h1>
+    <form id="buyer-form">
+        <input type="hidden" id="buyer-id" />
+        <div>
+            <label for="buyer-name">Name:</label>
+            <input type="text" id="buyer-name" required />
+        </div>
+        <div>
+            <label for="buyer-taxNumber">Tax Number:</label>
+            <input type="text" id="buyer-taxNumber" required />
+        </div>
+        <button type="submit">Save Buyer</button>
+        <button type="button" id="buyer-cancel-btn" style="display:none;">Cancel</button>
+    </form>
+
+    <h2>Buyers List</h2>
+    <table id="buyers-table" border="1" cellspacing="0" cellpadding="5">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Tax Number</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Buyers will be populated here -->
+        </tbody>
+    </table>
+
+    <script src="script.js"></script>
+</body>
+</html>
