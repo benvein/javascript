@@ -90,17 +90,15 @@ document.addEventListener('DOMContentLoaded', () => {
         currentBlogId = null;
         formTitle.textContent = 'Blog hozzáadása';
         blogForm.reset();
-        // Set date to today's date and disable editing
         const today = new Date().toISOString().split('T')[0];
         blogForm.date.value = today;
         blogForm.date.readOnly = true;
-        blogForm.dateOfLastUpdate.value = today;
         showSection(blogFormSection);
     }
 
     blogForm.date.addEventListener('change', () => {
         if (!isEditing) {
-            blogForm.dateOfLastUpdate.value = blogForm.date.value;
+            // Removed blogForm.dateOfLastUpdate.value update
         }
     });
 
