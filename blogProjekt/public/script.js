@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     blogForm.date.addEventListener('change', () => {
         if (!isEditing) {
-            blogForm.dateOfLastUpdate.value = blogForm.date.value;
+            // Removed blogForm.dateOfLastUpdate.value update
         }
     });
 
