@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let users = [];
 
-    // Populate user select dropdown
     const publisherSelect = blogForm.publisher;
     const newPublisherInput = document.getElementById('new-publisher');
     const addPublisherButton = document.getElementById('add-publisher-button');
@@ -37,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function populateUserSelect() {
-        // Clear existing options except the first placeholder
         while (publisherSelect.options.length > 1) {
             publisherSelect.remove(1);
         }
