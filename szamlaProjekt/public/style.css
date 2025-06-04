@@ -1,22 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    max-width: 1000px;
+    font-family: 'Roboto', Arial, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    background-color: #f5f7fa;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
 }
 
 h1, h2 {
     text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
 }
 
 form {
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 600px;
 }
 
 form div {
     margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 label {
@@ -33,26 +53,56 @@ input[type="date"] {
 }
 
 button {
-    padding: 7px 15px;
+    padding: 10px 20px;
     margin-right: 10px;
     cursor: pointer;
+    background-color: #2980b9;
+    border: none;
+    color: white;
+    font-weight: 600;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #1c5980;
+}
+
+button#cancel-btn,
+button#seller-cancel-btn,
+button#buyer-cancel-btn {
+    background-color: #e74c3c;
+}
+
+button#cancel-btn:hover,
+button#seller-cancel-btn:hover,
+button#buyer-cancel-btn:hover {
+    background-color: #b73224;
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
+    width: 90%;
+    max-width: 900px;
+    margin: 20px 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 th {
     background-color: #007BFF;
     color: white;
-    padding: 10px;
+    padding: 12px;
+    text-align: center;
+    font-weight: 600;
 }
 
 td {
-    padding: 8px;
+    padding: 12px;
     text-align: center;
-    border: 1px solid #ddd;
+    border-bottom: 1px solid #eee;
 }
 
 tr:nth-child(even) {

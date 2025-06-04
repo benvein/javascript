@@ -49,6 +49,7 @@ app.post('/bills', (req, res) => {
         }
         res.status(201).json({ message: 'Bill created successfully' });
     } catch (err) {
+        console.error(err);
         res.status(500).json({ message: `${err}` });
     }
 });

@@ -1,6 +1,15 @@
 import Database from "better-sqlite3";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const db = new Database('./data/database.sqlite');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const dbPath = path.join(__dirname, "../data/database.sqlite");
+const db = new Database(dbPath);
+
+// Enable foreign key constraints
+db.pragma('foreign_keys = ON');
 
 db.prepare(`CREATE TABLE IF NOT EXISTS bills
     (id INTEGER PRIMARY KEY AUTOINCREMENT,
