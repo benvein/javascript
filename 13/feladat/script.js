@@ -3,6 +3,7 @@ document.getElementById('dataForm').addEventListener('submit', function (e) {
 });
 
 function saveData() {
+    var savedData = JSON.parse(localStorage.getItem('data'));
     let name = document.getElementById('name').value;
     let postalCode = parseInt(document.getElementById('postalcode').value);
     let city = document.getElementById('city').value;
@@ -19,11 +20,22 @@ function saveData() {
 
     localStorage.setItem('data', JSON.stringify({ data }));
     console.log('data saved');
+    console.log(savedData);
+    console.log(savedData.name);
 }
 
-var savedData = JSON.parse(localStorage.getItem('data'));
-function showStuff(savedData) {
-    return (document.getElementById(
-        'showData',
-    ).innerHTML = `nev: ${savedData.name}<br>irszam: ${savedData.postalCode}<br>varos: ${savedData.city}<br>kozterulet: ${savedData.city}<br>hsz:: ${savedData.housenum}<br>`);
+function showStuff() {
+    var savedData = JSON.parse(localStorage.getItem('data'));
+    return (document.getElementById('showData').innerHTML =
+        'nev: ' +
+        savedData.name +
+        '<br>irszam: ' +
+        savedData.postalCode +
+        '<br>varos: ' +
+        savedData.city +
+        '<br>kozterulet: ' +
+        savedData.city +
+        '<br>hsz:' +
+        savedData.housenum +
+        '<br>');
 }
