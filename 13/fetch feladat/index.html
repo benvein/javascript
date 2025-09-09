@@ -3,9 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Jokes Fetcher</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+    <div class="container">
+        <h1>Jokes API Fetcher</h1>
+        <div class="menu">
+            <label for="method">Select Fetch Method:</label>
+            <select id="method">
+                <option value="random">Random Joke</option>
+                <option value="id">By ID</option>
+                <option value="type">By Type</option>
+            </select>
+            <div id="input-container">
+                <!-- Inputs will be shown based on selection -->
+            </div>
+            <button id="fetch-btn">Fetch Joke</button>
+        </div>
+        <div id="joke-display" class="joke-card">
+            <p>Select a method and click Fetch to get a joke!</p>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>

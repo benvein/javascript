@@ -26,16 +26,22 @@ function saveData() {
 
 function showStuff() {
     var savedData = JSON.parse(localStorage.getItem('data'));
-    return (document.getElementById('showData').innerHTML =
-        'nev: ' +
-        savedData.name +
-        '<br>irszam: ' +
-        savedData.postalCode +
-        '<br>varos: ' +
-        savedData.city +
-        '<br>kozterulet: ' +
-        savedData.city +
-        '<br>hsz:' +
-        savedData.housenum +
-        '<br>');
+    if (savedData && savedData.data) {
+        document.getElementById('showData').innerHTML =
+            'nev: ' +
+            savedData.data.name +
+            '<br>irszam: ' +
+            savedData.data.postalCode +
+            '<br>varos: ' +
+            savedData.data.city +
+            '<br>kozterulet: ' +
+            savedData.data.street +
+            '<br>hsz:' +
+            savedData.data.housenum +
+            '<br>';
+        document.getElementById('showData').style.display = 'block';
+    } else {
+        document.getElementById('showData').innerHTML = 'No data saved yet.';
+        document.getElementById('showData').style.display = 'block';
+    }
 }
