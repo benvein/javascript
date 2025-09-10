@@ -4,13 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const fetchBtn = document.getElementById('fetch-btn');
     const jokeDisplay = document.getElementById('joke-display');
 
-    // Update input container based on method
     methodSelect.addEventListener('change', updateInputContainer);
 
-    // Initial update
     updateInputContainer();
 
-    // Fetch joke on button click
     fetchBtn.addEventListener('click', fetchJoke);
 
     function updateInputContainer() {
