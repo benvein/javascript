@@ -3,26 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="style.css" type="text/css">
+    <link rel="stylesheet" href="style.css" type="text/css">
     <title>Document</title>
 </head>
 <body>
     <form id="dataForm">
-        <label for="name">nev: </label>
-        <input type="text" id="name" name="name"><br>
-        <label for="postalcode">irszam: </label>
-        <input type="number" id="postalcode" name="postalcode"><br>
-        <label for="city">telepules: </label>
-        <input type="text" id="city" name="city"><br>
-        <label for="street">kozt: </label>
-        <input type="text" id="street" name="street"><br>
-        <label for="housenum">hsz: </label>
-        <input type="text" id="housenum" name="housenum"><br>
-
-        <button type="button" onclick="saveData()">submit</button>
+        <div class="form-group">
+            <label for="name">nev: </label>
+            <input type="text" id="name" name="name">
+        </div>
+        <div class="form-group">
+            <label for="postalcode">irszam: </label>
+            <input type="number" id="postalcode" name="postalcode">
+        </div>
+        <div class="form-group">
+            <label for="city">telepules: </label>
+            <input type="text" id="city" name="city">
+        </div>
+        <div class="form-group">
+            <label for="street">kozt: </label>
+            <input type="text" id="street" name="street">
+        </div>
+        <div class="form-group">
+            <label for="housenum">hsz: </label>
+            <input type="text" id="housenum" name="housenum">
+        </div>
+        <div class="button-group">
+            <button type="button" onclick="saveData()">submit</button>
+            <button type="button" onclick="showStuff()">show</button>
+        </div>
     </form>
-    <button type="button" onclick="showStuff()">show</button>
-    <div id="showData" >
+    <div id="showData">
 
     </div>
 
