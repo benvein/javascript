@@ -56,6 +56,36 @@ app.delete('/users/:id', (req, res) => {
     res.status(200).json({ message: 'user deleted' });
 });
 
+app.put("/users/:id", (req,res) => {
+    const id = Number(req.params.id);
+    let user = users.find((user) => user.id === id);
+    if(!user){
+        return res.status(404).json({message: "user not found"});
+    }
+    const {name, age} = req.body;
+    if(!name || !age){
+        return res.status(400).json({message: "Invalid credentials"});
+    }
+    const index = users.indexOf(user);
+    //user = {id: user.id, name: name, age: age};
+    user = {...user, name, age};
+    users[index] = user;
+    res.status(200).json(user);
+});
+
+app.patch("/users/:id", (req,res) => {
+    const id = parseInt(req.params.id);
+    let user = users.find((user) => user.id === id);
+    if(!user){
+        return res.status(404).json({message: "user not found"});
+    }
+    const {name, age} = req.body;
+    const index = users.indexOf(user);
+    user = {id: user.id, name: name || user.name, age: age ||user.age};
+    users[index] = user;
+    res.status(200).json(user);
+});
+
 app.listen(PORT, () => {
     console.log('running on http://localhost:' + PORT);
 });
