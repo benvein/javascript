@@ -3,13 +3,13 @@ import Database from 'better-sqlite3';
 const db = new Database('./data/database.sqlite');
 
 db.prepare(
-    'CREATE TABLE IS NOT EXISTS books (id INTEGER PRIMARY KEY AUTOINCREMENT, title STRING, author STRING)',
+    'CREATE TABLE IF NOT EXISTS books (id INTEGER PRIMARY KEY AUTOINCREMENT, title STRING, author STRING)',
 ).run();
 
 export const getBooks = () => db.prepare('SELECT * FROM books').all();
 export const getBookById = (id) => db.prepare('SELECT * FROM books WHERE id = ?').get(id);
 export const saveBook = (title, author) =>
-    db.prepare('INSERT INTO books (title. author) VALUES (?, ?)').run();
+    db.prepare('INSERT INTO books (title, author) VALUES (?, ?)').run();
 export const updateBooks = (id, title, author) =>
     db.prepare('UPDATE books SET title = ?, author = ?, WHERE id = ?').run(title, author, id);
 export const deleteBookById = (id) => db.prepare('DELETE FROM books WHERE id = ?').run(id);
