@@ -1,6 +1,18 @@
 var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 document.addEventListener("DOMContentLoaded", () => {
+    async function fetchUsers() {
+        try{
+            const response = await fetch('/users');
+            if(!response.ok) throw new Error("failed to fetch users");
+            users = await response.json();
+        } catch(error){
+            alert(error.message);
+        }
+    }
+
+    
+
     const loginBtn = document.getElementById("loginbtn");
     if (loginBtn) {
         loginBtn.addEventListener("click", () => {
@@ -17,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const registerBtn = document.getElementById("registerBtn");
     if (registerBtn) {
         registerBtn.addEventListener("click", () => {
+            fetchUsers();
             let registerEmail = document.getElementById("regEmail").value;
             var isEmailValid = emailRegex.test(registerEmail);
             let password1 = document.getElementById("pwdReg").value;
@@ -24,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (isEmailValid) {
                 if (password1 == password2) {
                     alert("sikeres regisztráció");
+                    
                 } else {
                     alert("sikertelen regisztráció, nem egyezik a két jelszó");
                 }
