@@ -1,8 +1,8 @@
-import db from './database.js';
+import db from './db.js';
 
 db.prepare(
-    `CREATE TABLE IS NOT EXSITS post (
-    id INTEGER PRIMARY KEY AUTOINTEGER,
+    `CREATE TABLE IF NOT EXISTS post (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     userId INTEGER,
     title TEXT,
     content TEXT,
@@ -21,3 +21,4 @@ export const updatePost = (id, userId, title, content) =>
         .prepare('UPDATE post SET userId = ?, title = ?, content = ?, WHERE id = ?')
         .run(userId, title, content, id);
 export const deletePost = (id) => db.prepare("DELETE FROM post WHERE id = ?").run(id);
+

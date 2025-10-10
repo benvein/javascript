@@ -1,8 +1,8 @@
-import db from './database.js';
+import db from './db.js';
 
 db.prepare(
     `CREATE TABLE IF NOT EXISTS user (
-    id INTEGER PRIMARY KEY AUTOINTEGER,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     name STRING,
     email STRING,
     password STRING
@@ -20,3 +20,4 @@ export const updateUser = (id, name, email, password) =>
         .prepare('UPDATE user SET name = ?, email = ?, password = ?, WHERE id = ?')
         .run(name, email, password, id);
 export const deleteUser = (id) => db.prepare('DELETE FROM user WHERE id = ?').run(id);
+
