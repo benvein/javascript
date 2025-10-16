@@ -1,6 +1,7 @@
 import express from 'express';
 import * as db from '../data/user.js';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
@@ -8,56 +9,56 @@ router.get('/', (req, res) => {
     res.send('Users');
 });
 
-router.get('/users', (req, res) => {
-    const users = db.getUsers();
-    res.status(200).json(users);
-});
-
-router.get('/users/:id', (req, res) => {
-    const user = db.getUserById(+req.params.id);
-    if (!user) {
-        return res.status(404).json({ message: 'usernot found' });
-    }
-    res.status(200).json(user);
-});
-
-router.post('/users', (req, res) => {
+router.post('/register', (req, res) => {
     const { name, email, password } = req.body;
     if (!name || !email || !password) {
         return res.status(400).json({ message: 'invalid credentials' });
     }
-    const salt = bcrypt.genSaltSync();
+    const salt = bcrypt.genSaltSync(12);
     const hashedPw = bcrypt.hashSync(password, salt);
     const saved = db.createUser(name, email, hashedPw);
-    const user = db.getUserById(saved.lastInsertRowId);
+    const user = db.getUserById(saved.lastInsertRowid);
+    delete user.password;
     res.status(201).json(user);
 });
 
-router.put('/users/:id', (req, res) => {
-    const id = +req.params.id;
-    const user = db.getUserById(id);
-    if (!user) {
-        return res.status(404).json({ message: 'usernot found' });
-    }
-    const { name, email, password } = req.body;
-    if (!name || !email || !password) {
+router.post('/login', (req, res) => {
+    const { email, password } = req.body;
+    if (!email || !password) {
         return res.status(400).json({ message: 'invalid credentials' });
     }
-    db.updatePost(id, name, email, password);
-    const updatedPost = db.getPostById(id);
-    res.status(200).json(updatedPost);
-});
-
-router.delete('/users/:id', (req, res) => {
-    const id = +req.params.id;
-    const user = db.getUserById(id);
+    const user = db.getUserByEmail(email);
     if (!user) {
-        return res.status(404).json({ message: 'user not found' });
+        return res.status(404).json({ message: 'Invalid credentials' });
     }
-    db.deleteUser(id);
-    res.status(204).json({ message: 'user deleted;' });
+    if (!bcrypt.compareSync(password, user.password)) {
+        return res.status(401).json({ message: 'Invalid credentials' });
+    }
+    const token = jwt.sign({ userId: user.id, userEmail: user.email }, 'secret_key', {
+        expiresIn: '30m',
+    });
+    res.json(token);
 });
 
+router.get("/me", auth, (req,res)=> {
+    const user = db.getUserById(req.userId);
+    delete user.password;
+    res.json(user);
+})
 
+function auth(req,res,next){
+    const accessToken = req.headers.authorization;
+    if(!accessToken){
+        return res.status(401).json({message: "Unauthorized"});
+    }
+    const token = jwt.verify(accessToken.split(' ')[1], "secret_key");
+    const now = Math.floor(Date.now() / 1000);
+    if(!token.next || ! token.exp<now){
+        return res.status(403).json({message:"token expired"});
+    }
+    req.userId = token.userId;
+    req.userEmail = token.userEmail;
+    next();
+}
 
 export default router;

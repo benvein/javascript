@@ -4,13 +4,15 @@ db.prepare(
     `CREATE TABLE IF NOT EXISTS user (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name STRING,
-    email STRING,
+    email STRING UNIQUE,
     password STRING
     )`,
 ).run();
 
 export const getUsers = () => db.prepare('SELECT * FROM user').all();
-export const getUserById = (id) => db.prepare('SELECT * FROM user').get(id);
+export const getUserById = (id) => db.prepare('SELECT * FROM user WHERE id = ?').get(id);
+export const getUserByEmail = (email) =>
+    db.prepare('SELECT * FROM user WHERE email = ?').get(email);
 export const createUser = (name, email, password) =>
     db
         .prepare('INSERT INTO user (name, email, password) VALUES (?,?,?)')
@@ -20,4 +22,3 @@ export const updateUser = (id, name, email, password) =>
         .prepare('UPDATE user SET name = ?, email = ?, password = ?, WHERE id = ?')
         .run(name, email, password, id);
 export const deleteUser = (id) => db.prepare('DELETE FROM user WHERE id = ?').run(id);
-
