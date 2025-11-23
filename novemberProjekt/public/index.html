@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Tasks - Projektmenedzsment</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Auth képernyő -->
+  <div class="auth-container" id="authContainer">
+    <div class="auth-box">
+      <h1>🎯 Team Tasks</h1>
+      <p>Projektmenedzsment eszköz csapatoknak</p>
+      
+      <div id="authError" class="error" style="display: none;"></div>
+      
+      <div id="loginForm">
+        <div class="form-group">
+          <label>Email cím</label>
+          <input type="email" id="loginEmail" placeholder="pelda@email.com">
+        </div>
+        <div class="form-group">
+          <label>Jelszó</label>
+          <input type="password" id="loginPassword" placeholder="••••••••">
+        </div>
+        <button class="btn" onclick="login()">Bejelentkezés</button>
+        <button class="btn btn-secondary" onclick="showRegister()">Regisztráció</button>
+      </div>
+
+      <div id="registerForm" style="display: none;">
+        <div class="form-group">
+          <label>Email cím</label>
+          <input type="email" id="registerEmail" placeholder="pelda@email.com">
+        </div>
+        <div class="form-group">
+          <label>Jelszó</label>
+          <input type="password" id="registerPassword" placeholder="••••••••">
+        </div>
+        <button class="btn" onclick="register()">Regisztráció</button>
+        <button class="btn btn-secondary" onclick="showLogin()">Vissza a bejelentkezéshez</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fő alkalmazás -->
+  <div class="app-container" id="appContainer">
+    <div class="app-header">
+      <h1>🎯 Team Tasks</h1>
+      <div class="user-info">
+        <span class="user-email" id="userEmail"></span>
+        <button class="btn-logout" onclick="logout()">Kijelentkezés</button>
+      </div>
+    </div>
+
+    <div class="app-main">
+      <div class="sidebar">
+        <h2>Projektek</h2>
+        <button class="btn-new-project" onclick="showNewProjectModal()">+ Új projekt</button>
+        <div class="project-list" id="projectList"></div>
+      </div>
+
+      <div class="task-board">
+        <div id="emptyBoard" class="empty-state">
+          <h2>Válassz egy projektet</h2>
+          <p>vagy hozz létre egy újat a kezdéshez</p>
+        </div>
+
+        <div id="taskBoard" style="display: none;">
+          <div class="board-header">
+            <div>
+              <h2 id="projectName"></h2>
+              <p id="projectDescription" style="color: #666; margin-top: 5px;"></p>
+            </div>
+            <button class="btn-new-task" onclick="showNewTaskModal()">+ Új task</button>
+          </div>
+
+          <div class="task-columns">
+            <div class="task-column column-terv">
+              <div class="column-header">
+                <h3>📋 Terv <span class="task-count" id="countTerv">0</span></h3>
+              </div>
+              <div class="task-list" id="tasksTerv"></div>
+            </div>
+
+            <div class="task-column column-folyamatban">
+              <div class="column-header">
+                <h3>⚡ Folyamatban <span class="task-count" id="countFolyamatban">0</span></h3>
+              </div>
+              <div class="task-list" id="tasksFolyamatban"></div>
+            </div>
+
+            <div class="task-column column-kesz">
+              <div class="column-header">
+                <h3>✅ Kész <span class="task-count" id="countKesz">0</span></h3>
+              </div>
+              <div class="task-list" id="tasksKesz"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Új projekt modal -->
+  <div class="modal" id="newProjectModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Új projekt</h2>
+      </div>
+      <div class="form-group">
+        <label>Projekt neve</label>
+        <input type="text" id="newProjectName" placeholder="pl. Weboldal fejlesztés">
+      </div>
+      <div class="form-group">
+        <label>Leírás (opcionális)</label>
+        <input type="text" id="newProjectDescription" placeholder="Rövid leírás a projektről">
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('newProjectModal')">Mégse</button>
+        <button class="btn" onclick="createProject()">Létrehozás</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Új task modal -->
+  <div class="modal" id="newTaskModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Új task</h2>
+      </div>
+      <div class="form-group">
+        <label>Task címe</label>
+        <input type="text" id="newTaskTitle" placeholder="pl. API végpont implementálása">
+      </div>
+      <div class="form-group">
+        <label>Felelős (opcionális)</label>
+        <select id="newTaskAssignee">
+          <option value="">-- Nincs kijelölve --</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Határidő (opcionális)</label>
+        <input type="date" id="newTaskDueDate">
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('newTaskModal')">Mégse</button>
+        <button class="btn" onclick="createTask()">Létrehozás</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

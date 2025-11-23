@@ -1,13 +1,25 @@
 {
-  "name": "novemberprojekt",
+  "name": "team-tasks",
   "version": "1.0.0",
+  "description": "Projektmenedzsment eszköz csapatoknak",
   "main": "app.js",
-  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
-  "keywords": [],
+  "keywords": [
+    "project-management",
+    "task-management",
+    "team"
+  ],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "dependencies": {
+    "express": "^4.18.2",
+    "better-sqlite3": "^9.2.2",
+    "bcrypt": "^5.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
 }
