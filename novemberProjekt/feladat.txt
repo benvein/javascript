@@ -1,0 +1,16 @@
+
+13. Projektmenedzsment eszköz (Team Tasks)
+Végpontok:
+GET /api/projects
+POST /api/projects
+POST /api/projects/:id/tasks
+PUT /api/tasks/:id
+
+Táblák:
+users(id, email, password_hash)
+projects(id, name, description, owner_id)
+tasks(id, project_id, assignee_id, title, status, due_date)
+
+Frontend:
+Projektlista + belső taskboard a projektekhez
+Task státusz váltás (pl. Terv, Folyamatban, Kész)
