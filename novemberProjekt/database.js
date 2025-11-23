@@ -1,7 +1,6 @@
 const Database = require('better-sqlite3');
 const db = new Database('teamtasks.db');
 
-// Adatbázis inicializálás
 db.exec(`
   CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -30,14 +29,12 @@ db.exec(`
   );
 `);
 
-// User műveletek
 const userQueries = {
   create: db.prepare('INSERT INTO users (email, password_hash) VALUES (?, ?)'),
   findByEmail: db.prepare('SELECT * FROM users WHERE email = ?'),
   getAll: db.prepare('SELECT id, email FROM users')
 };
 
-// Project műveletek
 const projectQueries = {
   create: db.prepare('INSERT INTO projects (name, description, owner_id) VALUES (?, ?, ?)'),
   findById: db.prepare('SELECT * FROM projects WHERE id = ?'),
@@ -52,7 +49,6 @@ const projectQueries = {
   checkOwnership: db.prepare('SELECT * FROM projects WHERE id = ? AND owner_id = ?')
 };
 
-// Task műveletek
 const taskQueries = {
   create: db.prepare(`
     INSERT INTO tasks (project_id, title, assignee_id, due_date, status)

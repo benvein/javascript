@@ -10,7 +10,6 @@ body {
   min-height: 100vh;
 }
 
-/* ============= AUTH KÉPERNYŐ ============= */
 
 .auth-container {
   display: flex;
@@ -103,8 +102,6 @@ body {
   font-size: 14px;
 }
 
-/* ============= FŐ ALKALMAZÁS ============= */
-
 .app-container {
   display: none;
   height: 100vh;
@@ -155,8 +152,6 @@ body {
   display: flex;
   height: calc(100vh - 70px);
 }
-
-/* ============= SIDEBAR ============= */
 
 .sidebar {
   width: 300px;
@@ -233,8 +228,6 @@ body {
   font-size: 12px;
   color: #999;
 }
-
-/* ============= TASK BOARD ============= */
 
 .task-board {
   flex: 1;
@@ -415,8 +408,6 @@ body {
   transform: scale(1.05);
 }
 
-/* ============= MODAL ============= */
-
 .modal {
   display: none;
   position: fixed;
@@ -479,8 +470,6 @@ body {
   margin-bottom: 10px;
   color: #999;
 }
-
-/* ============= RESPONSIVE ============= */
 
 @media (max-width: 768px) {
   .app-main {

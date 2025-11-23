@@ -1,11 +1,8 @@
-// ============= GLOBÁLIS VÁLTOZÓK =============
-
 let token = localStorage.getItem('token');
 let currentUser = JSON.parse(localStorage.getItem('user') || 'null');
 let currentProject = null;
 let users = [];
 
-// ============= INICIALIZÁLÁS =============
 
 if (token && currentUser) {
   showApp();
@@ -13,7 +10,6 @@ if (token && currentUser) {
   loadUsers();
 }
 
-// Enter key kezelés
 document.getElementById('loginPassword')?.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') login();
 });
@@ -21,8 +17,6 @@ document.getElementById('loginPassword')?.addEventListener('keypress', (e) => {
 document.getElementById('registerPassword')?.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') register();
 });
-
-// ============= AUTH FUNKCIÓK =============
 
 function showRegister() {
   document.getElementById('loginForm').style.display = 'none';
@@ -120,8 +114,6 @@ function hideError() {
   document.getElementById('authError').style.display = 'none';
 }
 
-// ============= PROJEKT FUNKCIÓK =============
-
 async function loadProjects() {
   try {
     const res = await fetch('/api/projects', {
@@ -187,8 +179,6 @@ async function selectProject(id) {
   loadProjects();
   loadTasks();
 }
-
-// ============= TASK FUNKCIÓK =============
 
 async function loadTasks() {
   if (!currentProject) return;
@@ -314,8 +304,6 @@ async function createTask() {
     alert('Task létrehozása sikertelen');
   }
 }
-
-// ============= MODAL KEZELÉS =============
 
 function closeModal(modalId) {
   document.getElementById(modalId).classList.remove('active');
