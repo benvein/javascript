@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+            crossorigin="anonymous"
+        />
+        <title>Document</title>
+        <style>
+            .btn {
+                background-color: rgb(65, 63, 63);
+                width: 80%;
+                border: none;
+            }
+            .card {
+                text-align: center;
+            }
+            #month {
+                font-weight: 400;
+                color: darkgrey;
+            }
+            #price {
+                font-size: xx-large;
+            }
+            .container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+            .card-text{
+                font-size: smaller;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="card" style="width: 18rem">
+                <h5 class="card-header">Labrador</h5>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <span id="price">$15</span><span id="month">/mo</span>
+                    </h5>
+                    <p class="card-text">
+                        Unlimited Matches<br />
+                        Unlimited Messages<br />
+                        Unlimited App Usage
+                    </p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
