@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+            crossorigin="anonymous"
+        />
+
+        <title>Document</title>
+        <style>
+            header {
+                background: rgba(156, 67, 159, 0.4);
+                width: 100%;
+                height: 50px;
+            }
+            #headertext {
+                margin: auto;
+            }
+            .container {
+                display: flex;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                align-items: center;
+                justify-content: center;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h2 id="headertext">Counter</h2>
+        </header>
+
+        <div class="container">
+            <div class="textPart row">
+                <p>Counter value:</p>
+                <br />
+                <p id="counter"></p>
+            </div>
+            <div class="singleButtons row">
+                <button class="btn" id="minusButton">-</button>
+                <button class="btn" id="plusButton">+</button>
+            </div>
+            <br />
+            <div class="twoDigitButtons row">
+                <button class="btn" id="minus10Button">-10</button>
+                <button class="btn" id="plus10Button">+10</button>
+            </div>
+        </div>
+
+        <script>
+            let value = 0;
+
+            document.getElementById("minusButton").addEventListener("click", () => {
+                value--;
+            })
+             document.getElementById("plusButton").addEventListener("click", () => {
+                value++;
+            })
+             document.getElementById("minus10Button").addEventListener("click", () => {
+                value=value-10;
+            })
+             document.getElementById("plus10Button").addEventListener("click", () => {
+                value=value+10;
+            })
+
+            document.getElementById('counter').innerHTML = `${value}`;
+        </script>
+    </body>
+</html>
